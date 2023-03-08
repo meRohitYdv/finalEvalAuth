@@ -20,7 +20,7 @@ function verifyJWT(req, res, next) {
     res.status(200).send(decoded);
   }
   catch(ex){
-    res.status(400).send('Invalid token.');
+    res.status(401).send('Invalid token.');
   }
 }
 
