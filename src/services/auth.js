@@ -28,8 +28,10 @@ const authenticateUser = async function (reqBody) {
   if (!validPassword)
     return 'Invalid id or password.';
 
+  const token = jwt.sign({ username: username}, config.get('jwtPrivateKey'), {expiresIn: '1d'});
+  redisClient.set(token, 1 , 'EX', 3600);
   return {
-    accessToken: jwt.sign({ username: username}, config.get('jwtPrivateKey'), {expiresIn: '1d'}),
+    accessToken: token,
   };
 };
 

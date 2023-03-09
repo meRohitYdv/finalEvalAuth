@@ -10,14 +10,19 @@ const authenticateUser =  async function(req, res){
   res.status(200).send(token);
 };
 
-function verifyJWT(req, res, next) {
+async function verifyJWT(req, res, next) {
   const token = req.body?.token;
   if(!token)
     return res.status(401).send('Access denied. No token provided.');
-    
   try{
-    const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
-    res.status(200).send(decoded);
+    const isToken = await redisClient.get(token);
+    if(Number(isToken) === 1){
+      const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+      res.status(200).send(decoded);
+    }
+    else {
+      res.status(401).send('Invalid token.');
+    }
   }
   catch(ex){
     res.status(401).send('Invalid token.');
