@@ -6,13 +6,14 @@ const redis = require('redis');
 const app = express();
 const port = 8080;
 
-app.use(express.json());
 var corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
 
+
+app.use(express.json());
 const config = {
   socket: {
     host: 'localhost',

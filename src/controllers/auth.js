@@ -4,7 +4,7 @@ const config = require('config');
 
 const authenticateUser =  async function(req, res){
   const token = await services.authenticateUser(req.body);
-  if(token==='Invalid id or password.')
+  if(token==='Invalid email or password.')
     return res.status(400).send(token);
   
   res.status(200).send(token);

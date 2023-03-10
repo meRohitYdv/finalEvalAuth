@@ -13,22 +13,22 @@ const config = require('config');
 // };
 
 const authenticateUser = async function (reqBody) {
-  const { username, password } = reqBody;
+  const { email, password } = reqBody;
   const user = await Credential.findOne({
     where: {
-      username: username
+      email: email
     }
   });
 
   if (user===null)
-    return 'Invalid id or password.';
+    return 'Invalid email or password.';
 
   const validPassword = await bcrypt.compare(password, user.dataValues.password);
   
   if (!validPassword)
-    return 'Invalid id or password.';
+    return 'Invalid email or password.';
 
-  const token = jwt.sign({ username: username}, config.get('jwtPrivateKey'), {expiresIn: '1d'});
+  const token = jwt.sign({ email: email}, config.get('jwtPrivateKey'), {expiresIn: '1d'});
   redisClient.set(token, 1 , 'EX', 3600);
   return {
     accessToken: token,

@@ -5,13 +5,13 @@ const generateHashedPassword = require('../../src/utils/generateHashedPasswords.
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Credentials', [{
-      username: 'demo-user1',
-      password: await generateHashedPassword('demo-user1'),
+      email: 'demoUser1@gmail.com',
+      password: await generateHashedPassword('demoUser1'),
       createdAt: new Date(),
       updatedAt: new Date()
     },{
-      username: 'demo-user2',
-      password: await generateHashedPassword('demo-user2'),
+      email: 'demoUser2@gmail.com',
+      password: await generateHashedPassword('demoUser2'),
       createdAt: new Date(),
       updatedAt: new Date()
     }

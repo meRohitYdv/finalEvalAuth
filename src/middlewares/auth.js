@@ -5,10 +5,9 @@ const Joi = require('Joi');
 
 
 function validateRequest(req, res, next){
-  console.log(req.body);
   const schema = Joi.object().keys({ 
-    username: Joi.string().required(),
-    password: Joi.string().required()
+    email: Joi.string().required().min(3).email(),
+    password: Joi.string().required().min(3)
   });
     
   const result = schema.validate(req.body);
